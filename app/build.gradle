@@ -63,7 +63,36 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.all {
+            maxHeapSize = '2048m'
+            jvmArgs '-XX:MaxPermSize=512m', '-XX:-UseSplitVerifier'
+        }
     }
+}
+jacoco {
+    toolVersion = "0.7.2+"
+}
+jacocoAndroidUnitTestReport {
+    excludes += [
+            '**/*_MembersInjector.class',
+            '**/Dagger*Component.class',
+            '**/Dagger*Component$Builder.class',
+            '**/*Module_*Factory.class',
+            '**/*_Factory.class',
+            '**/R.class',
+            '**/R$*.class',
+            '**/DataBindingInfo.class',
+            '**/android/databinding/*.*',
+            '**/com/android/**/*.*',
+            'android/**/*.*',
+            '**/BR.class',
+            'com/nagopy/android/callconfirm/databinding/*.*',
+            'com/nagopy/android/callconfirm/**/*PermissionsDispatcher.class',
+            'com/nagopy/android/callconfirm/di/*'
+    ]
+    csv.enabled false
+    html.enabled true
+    xml.enabled true
 }
 
 dependencies {

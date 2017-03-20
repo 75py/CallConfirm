@@ -28,8 +28,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowToast;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -55,6 +58,20 @@ public class ToastServiceTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         doReturn(false).when(mainHandler).post(any());
+    }
+
+    @Test
+    public void show() throws Exception {
+        ToastService.show(RuntimeEnvironment.application, "msg");
+        Intent service = ShadowApplication.getInstance().getNextStartedService();
+        assertThat(service).isNotNull();
+        assertThat(service.getComponent().getClassName()).isEqualTo(ToastService.class.getName());
+    }
+
+    @Test
+    public void onCreate() throws Exception {
+        ToastService service = Robolectric.buildService(ToastService.class).create().get();
+        assertThat(service.mainHandler).isNotNull();
     }
 
     @Test

@@ -23,7 +23,7 @@ import static android.view.ViewGroup.LayoutParams;
 
 public class LicenseActivity extends BaseActivity {
 
-    private static final String LICENSES_HTML_PATH = "file:///android_asset/licenses.html";
+    static final String LICENSES_HTML_PATH = "file:///android_asset/licenses.html";
 
     WebView webView;
 

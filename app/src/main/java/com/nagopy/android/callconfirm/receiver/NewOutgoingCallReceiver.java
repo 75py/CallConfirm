@@ -47,8 +47,10 @@ public class NewOutgoingCallReceiver extends BaseBroadcastReceiver {
         if (permissionHelper.areGrantedPermissions()) {
             if (hookState.isHookEnabled()) {
                 String phoneNumber = getResultData();
-                setResultData(null);
-                navigator.startConfirmActivity(phoneNumber);
+                if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                    setResultData(null);
+                    navigator.startConfirmActivity(phoneNumber);
+                }
             } else {
                 // hook disabled
                 // reset hook status to enabled

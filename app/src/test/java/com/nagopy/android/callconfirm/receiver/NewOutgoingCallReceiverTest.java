@@ -100,6 +100,34 @@ public class NewOutgoingCallReceiverTest {
     }
 
     @Test
+    public void onReceive_hook_nullNumber() throws Exception {
+        doReturn(true).when(permissionHelper).areGrantedPermissions();
+        doReturn(true).when(hookState).isHookEnabled();
+        doReturn(null).when(newOutgoingCallReceiver).getResultData();
+
+        newOutgoingCallReceiver.onReceive(context, intent);
+
+        verify(hookState, times(1)).isHookEnabled();
+        verify(hookState, times(0)).setHookEnabled(anyBoolean());
+        verify(newOutgoingCallReceiver, times(0)).setResultData(null);
+        verify(navigator, times(0)).startConfirmActivity("1234567890");
+    }
+
+    @Test
+    public void onReceive_hook_emptyNumber() throws Exception {
+        doReturn(true).when(permissionHelper).areGrantedPermissions();
+        doReturn(true).when(hookState).isHookEnabled();
+        doReturn("").when(newOutgoingCallReceiver).getResultData();
+
+        newOutgoingCallReceiver.onReceive(context, intent);
+
+        verify(hookState, times(1)).isHookEnabled();
+        verify(hookState, times(0)).setHookEnabled(anyBoolean());
+        verify(newOutgoingCallReceiver, times(0)).setResultData(null);
+        verify(navigator, times(0)).startConfirmActivity("1234567890");
+    }
+
+    @Test
     public void onReceive_through() throws Exception {
         doReturn(true).when(permissionHelper).areGrantedPermissions();
         doReturn(false).when(hookState).isHookEnabled();

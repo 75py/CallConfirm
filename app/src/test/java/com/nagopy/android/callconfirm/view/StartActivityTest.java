@@ -16,8 +16,12 @@
 
 package com.nagopy.android.callconfirm.view;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+
 import com.nagopy.android.callconfirm.BuildConfig;
 import com.nagopy.android.callconfirm.R;
+import com.nagopy.android.callconfirm.viewmodel.StartViewModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +33,9 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
@@ -49,6 +56,39 @@ public class StartActivityTest {
 
         assertThat(activity.binding.appName.getText()).isEqualTo(RuntimeEnvironment.application.getString(R.string.app_name));
         //assertThat(activity.binding.version.getText()).isEqualTo(RuntimeEnvironment.application.getString(R.string.version, BuildConfig.VERSION_NAME));
+    }
+
+    @Test
+    public void startPermissionSettingsIfNeeded() throws Exception {
+        ActivityController<StartActivity> controller = Robolectric.buildActivity(StartActivity.class);
+        StartActivity activity = controller.create().start().resume().get();
+
+        activity.startPermissionSettingsIfNeeded();
+        // 落ちなければOK
+    }
+
+    @Test
+    public void onRequestPermissionsResult() throws Exception {
+        ActivityController<StartActivity> controller = Robolectric.buildActivity(StartActivity.class);
+        StartActivity activity = controller.create().start().resume().get();
+
+        activity.viewModel = mock(StartViewModel.class);
+        activity.onRequestPermissionsResult(0
+                , new String[]{Manifest.permission.CALL_PHONE, Manifest.permission.READ_CONTACTS}
+                , new int[]{PackageManager.PERMISSION_GRANTED, PackageManager.PERMISSION_GRANTED});
+        verify(activity.viewModel, times(1)).updateGrantedPermissions();
+    }
+
+    @Test
+    public void onPermissionDenied() throws Exception {
+        ActivityController<StartActivity> controller = Robolectric.buildActivity(StartActivity.class);
+        StartActivity activity = controller.create().start().resume().get();
+
+        activity.onPermissionDenied();
+
+        // とりあえず落ちなければOK
+        // AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
+        // assertThat(dialog).isNotNull();
     }
 
 }
