@@ -21,10 +21,13 @@ import android.view.View;
 
 import com.nagopy.android.callconfirm.di.ActivityScope;
 import com.nagopy.android.callconfirm.helper.HookState;
+import com.nagopy.android.callconfirm.view.helper.ContactsHelper;
 import com.nagopy.android.callconfirm.view.helper.Navigator;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 @ActivityScope
@@ -36,9 +39,14 @@ public class ConfirmViewModel {
     @Inject
     Navigator navigator;
 
-    public ObservableField<String> phoneNumber = new ObservableField<>();
+    @Inject
+    ContactsHelper contactsHelper;
 
-    public ObservableField<String> name = new ObservableField<>();
+    public final ObservableField<String> phoneNumber = new ObservableField<>();
+
+    public final ObservableField<String> name = new ObservableField<>();
+
+    public final ObservableField<String> imageUri = new ObservableField<>();
 
     @SuppressWarnings("WeakerAccess")
     OnFinishListener onFinishListener;
@@ -68,6 +76,23 @@ public class ConfirmViewModel {
         }
 
         this.phoneNumber.set(phoneNumber);
+    }
+
+    public void findContactData() {
+        contactsHelper.findBy(phoneNumber.get())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    Timber.d("dispName=%s, thumbnailUri=%s", s.dispName, s.thumbnailUri);
+
+                    if (s.dispName != null && !s.dispName.isEmpty()) {
+                        name.set(s.dispName);
+                    }
+
+                    if (s.thumbnailUri != null && !s.thumbnailUri.isEmpty()) {
+                        imageUri.set(s.thumbnailUri);
+                    }
+                }, Timber::e);
     }
 
     public void destroy() {

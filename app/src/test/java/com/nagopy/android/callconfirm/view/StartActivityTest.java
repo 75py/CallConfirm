@@ -23,7 +23,6 @@ import com.nagopy.android.callconfirm.BuildConfig;
 import com.nagopy.android.callconfirm.R;
 import com.nagopy.android.callconfirm.viewmodel.StartViewModel;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -40,10 +39,6 @@ import static org.mockito.Mockito.verify;
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
 public class StartActivityTest {
-
-    @Before
-    public void setup() {
-    }
 
     @Test
     public void test() throws Exception {

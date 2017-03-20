@@ -19,7 +19,6 @@ package com.nagopy.android.callconfirm.viewmodel;
 import com.nagopy.android.callconfirm.helper.PermissionHelper;
 import com.nagopy.android.callconfirm.view.helper.Navigator;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -46,10 +45,6 @@ public class StartViewModelTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test

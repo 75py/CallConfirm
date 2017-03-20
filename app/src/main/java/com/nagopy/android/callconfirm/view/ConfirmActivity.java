@@ -17,11 +17,8 @@
 package com.nagopy.android.callconfirm.view;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 
 import com.nagopy.android.callconfirm.R;
@@ -29,12 +26,6 @@ import com.nagopy.android.callconfirm.databinding.ActivityConfirmBinding;
 import com.nagopy.android.callconfirm.viewmodel.ConfirmViewModel;
 
 import javax.inject.Inject;
-
-import io.reactivex.Single;
-import io.reactivex.SingleOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class ConfirmActivity extends BaseActivity {
 
@@ -59,25 +50,10 @@ public class ConfirmActivity extends BaseActivity {
 
         String pn = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
         viewModel.setPhoneNumber(pn);
+        viewModel.findContactData();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_confirm);
         binding.setViewModel(viewModel);
-
-        Single.create((SingleOnSubscribe<String>) e -> {
-            Uri lookupUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(pn));
-            Cursor c = getContentResolver().query(
-                    lookupUri
-                    , new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}
-                    , null, null, null);
-            if (c != null && c.moveToFirst()) {
-                e.onSuccess(c.getString(c.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)));
-                c.close();
-            } else {
-                e.onSuccess(getString(R.string.unregistered));
-            }
-        }).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> viewModel.name.set(s), Timber::e);
     }
 
     @Override

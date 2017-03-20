@@ -34,7 +34,7 @@ public class StartViewModel {
     @Inject
     PermissionHelper permissionHelper;
 
-    public ObservableBoolean arePermissionsGranted = new ObservableBoolean();
+    public final ObservableBoolean arePermissionsGranted = new ObservableBoolean();
 
     @Inject
     StartViewModel() {
