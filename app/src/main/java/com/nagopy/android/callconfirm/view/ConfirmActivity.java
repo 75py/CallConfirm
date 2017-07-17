@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import com.nagopy.android.callconfirm.R;
 import com.nagopy.android.callconfirm.databinding.ActivityConfirmBinding;
@@ -44,6 +45,10 @@ public class ConfirmActivity extends BaseActivity {
             ToastService.show(ConfirmActivity.this, getString(R.string.canceled));
             finish();
         });
+        viewModel.setOnLongClickListener(v ->
+                Toast.makeText(ConfirmActivity.this, v.getContentDescription(), Toast.LENGTH_SHORT).show()
+        );
+
 
         Intent intent = getIntent();
         validateIntent(intent);
