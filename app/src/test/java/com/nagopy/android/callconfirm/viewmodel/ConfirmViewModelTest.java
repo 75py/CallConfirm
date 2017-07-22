@@ -16,6 +16,8 @@
 
 package com.nagopy.android.callconfirm.viewmodel;
 
+import android.view.View;
+
 import com.nagopy.android.callconfirm.helper.HookState;
 import com.nagopy.android.callconfirm.view.helper.Navigator;
 import com.nagopy.android.callconfirm.viewmodel.ConfirmViewModel.OnCancelListener;
@@ -28,6 +30,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.doNothing;
@@ -48,6 +51,12 @@ public class ConfirmViewModelTest {
 
     @Mock
     OnCancelListener onCancelListener;
+
+    @Mock
+    ConfirmViewModel.OnLongClickListener onLongClickListener;
+
+    @Mock
+    View view;
 
     @InjectMocks
     ConfirmViewModel viewModel;
@@ -73,6 +82,15 @@ public class ConfirmViewModelTest {
         viewModel.setOnCancelListener(l);
 
         assertThat(viewModel.onCancelListener).isEqualTo(l);
+    }
+
+    @Test
+    public void setOnLongClickListener() throws Exception {
+        ConfirmViewModel.OnLongClickListener l = mock(ConfirmViewModel.OnLongClickListener.class);
+
+        viewModel.setOnLongClickListener(l);
+
+        assertThat(viewModel.onLongClickListener).isEqualTo(l);
     }
 
     @Test(expected = RuntimeException.class)
@@ -135,6 +153,15 @@ public class ConfirmViewModelTest {
         viewModel.onClickCancel.onClick(null);
 
         verify(onCancelListener, times(1)).onCancel();
+    }
+
+    @Test
+    public void onLongClick() throws Exception {
+        doNothing().when(onLongClickListener).onLongClick(view);
+
+        viewModel.onLongClick.onLongClick(view);
+
+        verify(onLongClickListener, times(1)).onLongClick(view);
     }
 
 }

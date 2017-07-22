@@ -54,6 +54,9 @@ public class ConfirmViewModel {
     @SuppressWarnings("WeakerAccess")
     OnCancelListener onCancelListener;
 
+    @SuppressWarnings("WeakerAccess")
+    OnLongClickListener onLongClickListener;
+
     @Inject
     ConfirmViewModel() {
     }
@@ -64,6 +67,10 @@ public class ConfirmViewModel {
 
     public void setOnCancelListener(OnCancelListener onCancelListener) {
         this.onCancelListener = onCancelListener;
+    }
+
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -117,11 +124,23 @@ public class ConfirmViewModel {
         }
     };
 
+    public final View.OnLongClickListener onLongClick = v -> {
+        Timber.d("Show tooltip");
+        if (onLongClickListener != null) {
+            onLongClickListener.onLongClick(v);
+        }
+        return false;
+    };
+
     public interface OnFinishListener {
         void onFinish();
     }
 
     public interface OnCancelListener {
         void onCancel();
+    }
+
+    public interface OnLongClickListener {
+        void onLongClick(View view);
     }
 }

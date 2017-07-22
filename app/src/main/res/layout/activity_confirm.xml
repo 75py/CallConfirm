@@ -65,24 +65,37 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="Name" />
 
-        <Button
+        <ImageButton
             android:id="@+id/call"
             android:layout_height="wrap_content"
             android:layout_below="@+id/icon"
             android:layout_marginTop="@dimen/padding_medium"
+            android:background="@drawable/button_call"
+            android:contentDescription="@string/call"
             android:onClick="@{viewModel.onClickCall}"
-            android:text="@string/call"
-            app:layout_widthPercent="50%" />
+            android:scaleType="fitCenter"
+            android:src="?android:attr/selectableItemBackground"
+            android:textColor="@android:color/white"
+            app:layout_marginLeftPercent="2%"
+            app:layout_marginRightPercent="2%"
+            app:layout_widthPercent="46%"
+            app:onLongClickListener="@{viewModel.onLongClick}" />
 
-        <Button
+        <ImageButton
             android:id="@+id/cancel"
             android:layout_height="wrap_content"
             android:layout_below="@+id/icon"
             android:layout_marginTop="@dimen/padding_medium"
             android:layout_toEndOf="@+id/call"
+            android:background="@drawable/button_cancel"
+            android:contentDescription="@string/cancel"
             android:onClick="@{viewModel.onClickCancel}"
-            android:text="@string/cancel"
-            app:layout_widthPercent="50%" />
+            android:src="?android:attr/selectableItemBackground"
+            android:textColor="@android:color/white"
+            app:layout_marginLeftPercent="2%"
+            app:layout_marginRightPercent="2%"
+            app:layout_widthPercent="46%"
+            app:onLongClickListener="@{viewModel.onLongClick}" />
 
 
     </android.support.percent.PercentRelativeLayout>
