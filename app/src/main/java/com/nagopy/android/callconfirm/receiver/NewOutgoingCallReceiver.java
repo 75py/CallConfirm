@@ -18,6 +18,7 @@ package com.nagopy.android.callconfirm.receiver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.telephony.PhoneNumberUtils;
 
 import com.nagopy.android.callconfirm.helper.HookState;
 import com.nagopy.android.callconfirm.helper.PermissionHelper;
@@ -47,7 +48,9 @@ public class NewOutgoingCallReceiver extends BaseBroadcastReceiver {
         if (permissionHelper.areGrantedPermissions()) {
             if (hookState.isHookEnabled()) {
                 String phoneNumber = getResultData();
-                if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                if (phoneNumber != null
+                        && !phoneNumber.isEmpty()
+                        && !PhoneNumberUtils.isEmergencyNumber(phoneNumber)) {
                     setResultData(null);
                     navigator.startConfirmActivity(phoneNumber);
                 }
