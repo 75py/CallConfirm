@@ -17,6 +17,7 @@
 package com.nagopy.android.callconfirm.viewmodel;
 
 import android.databinding.ObservableField;
+import android.telephony.PhoneNumberUtils;
 import android.view.View;
 
 import com.nagopy.android.callconfirm.di.ActivityScope;
@@ -65,7 +66,8 @@ public class ConfirmViewModel {
             throw new RuntimeException("phoneNumber is empty");
         }
 
-        if (!phoneNumber.matches("[\\d-]+")) {
+        if (!PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)) {
+            Timber.d("Illegal chars : %s", phoneNumber);
             throw new RuntimeException("phoneNumber contains illegal chars");
         }
 
