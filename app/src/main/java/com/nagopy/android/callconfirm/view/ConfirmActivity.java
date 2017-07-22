@@ -31,6 +31,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
 public class ConfirmActivity extends BaseActivity {
@@ -74,11 +75,12 @@ public class ConfirmActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        disposables.forEach(disposable -> {
-            if (!disposable.isDisposed()) {
-                disposable.dispose();
-            }
-        });
+        Observable.fromIterable(disposables)
+                .forEach(disposable -> {
+                    if (!disposable.isDisposed()) {
+                        disposable.dispose();
+                    }
+                });
         super.onDestroy();
         viewModel.destroy();
     }

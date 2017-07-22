@@ -47,3 +47,21 @@
   license: The Apache Software License, Version 2.0
   licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
   url: http://code.google.com/p/atinject/
+- artifact: com.trello.rxlifecycle2:rxlifecycle-android:+
+  name: RxLifecycle-Android
+  copyrightHolder: Trello
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/trello/RxLifecycle
+- artifact: com.trello.rxlifecycle2:rxlifecycle-components:+
+  name: RxLifecycle-Components
+  copyrightHolder: Trello
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/trello/RxLifecycle
+- artifact: com.trello.rxlifecycle2:rxlifecycle:+
+  name: RxLifecycle
+  copyrightHolder: Trello
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/trello/RxLifecycle
