@@ -28,6 +28,8 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.CompletableSubject;
 import timber.log.Timber;
 
 @ActivityScope
@@ -48,29 +50,14 @@ public class ConfirmViewModel {
 
     public final ObservableField<String> imageUri = new ObservableField<>();
 
-    @SuppressWarnings("WeakerAccess")
-    OnFinishListener onFinishListener;
+    public final CompletableSubject callObserver = CompletableSubject.create();
 
-    @SuppressWarnings("WeakerAccess")
-    OnCancelListener onCancelListener;
+    public final CompletableSubject cancelObserver = CompletableSubject.create();
 
-    @SuppressWarnings("WeakerAccess")
-    OnLongClickListener onLongClickListener;
+    public final BehaviorSubject<View> longClickObserver = BehaviorSubject.create();
 
     @Inject
     ConfirmViewModel() {
-    }
-
-    public void setOnFinishListener(OnFinishListener onFinishListener) {
-        this.onFinishListener = onFinishListener;
-    }
-
-    public void setOnCancelListener(OnCancelListener onCancelListener) {
-        this.onCancelListener = onCancelListener;
-    }
-
-    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
-        this.onLongClickListener = onLongClickListener;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -103,44 +90,22 @@ public class ConfirmViewModel {
     }
 
     public void destroy() {
-        onFinishListener = null;
-        onCancelListener = null;
     }
 
     public final View.OnClickListener onClickCall = v -> {
         Timber.d("Click Call");
         hookState.setHookEnabled(false);
         navigator.call(phoneNumber.get());
-
-        if (onFinishListener != null) {
-            onFinishListener.onFinish();
-        }
+        callObserver.onComplete();
     };
 
     public final View.OnClickListener onClickCancel = v -> {
         Timber.d("Click Cancel");
-        if (onCancelListener != null) {
-            onCancelListener.onCancel();
-        }
+        cancelObserver.onComplete();
     };
 
     public final View.OnLongClickListener onLongClick = v -> {
-        Timber.d("Show tooltip");
-        if (onLongClickListener != null) {
-            onLongClickListener.onLongClick(v);
-        }
+        longClickObserver.onNext(v);
         return false;
     };
-
-    public interface OnFinishListener {
-        void onFinish();
-    }
-
-    public interface OnCancelListener {
-        void onCancel();
-    }
-
-    public interface OnLongClickListener {
-        void onLongClick(View view);
-    }
 }

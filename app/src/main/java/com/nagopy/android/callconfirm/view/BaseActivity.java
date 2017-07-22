@@ -18,14 +18,14 @@ package com.nagopy.android.callconfirm.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.nagopy.android.callconfirm.App;
 import com.nagopy.android.callconfirm.di.ActivityComponent;
 import com.nagopy.android.callconfirm.di.ActivityModule;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-abstract class BaseActivity extends AppCompatActivity {
+abstract class BaseActivity extends RxAppCompatActivity {
 
     ActivityComponent component;
 

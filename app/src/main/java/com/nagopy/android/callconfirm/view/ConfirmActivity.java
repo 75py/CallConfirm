@@ -26,7 +26,12 @@ import com.nagopy.android.callconfirm.R;
 import com.nagopy.android.callconfirm.databinding.ActivityConfirmBinding;
 import com.nagopy.android.callconfirm.viewmodel.ConfirmViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
 
 public class ConfirmActivity extends BaseActivity {
 
@@ -35,20 +40,26 @@ public class ConfirmActivity extends BaseActivity {
 
     ActivityConfirmBinding binding;
 
+    List<Disposable> disposables = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getComponent().inject(this);
-        viewModel.setOnFinishListener(this::finish);
-        viewModel.setOnCancelListener(() -> {
-            ToastService.show(ConfirmActivity.this, getString(R.string.canceled));
-            finish();
-        });
-        viewModel.setOnLongClickListener(v ->
-                Toast.makeText(ConfirmActivity.this, v.getContentDescription(), Toast.LENGTH_SHORT).show()
-        );
 
+        disposables.add(viewModel.callObserver
+                .compose(bindToLifecycle())
+                .subscribe(this::finish));
+        disposables.add(viewModel.cancelObserver
+                .compose(bindToLifecycle())
+                .subscribe(() -> {
+                    ToastService.show(this, getString(R.string.canceled));
+                    finish();
+                }));
+        viewModel.longClickObserver
+                .compose(bindToLifecycle())
+                .subscribe(view -> Toast.makeText(ConfirmActivity.this, view.getContentDescription(), Toast.LENGTH_SHORT).show());
 
         Intent intent = getIntent();
         validateIntent(intent);
@@ -63,6 +74,11 @@ public class ConfirmActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        disposables.forEach(disposable -> {
+            if (!disposable.isDisposed()) {
+                disposable.dispose();
+            }
+        });
         super.onDestroy();
         viewModel.destroy();
     }

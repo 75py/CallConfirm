@@ -32,11 +32,15 @@ import org.robolectric.Shadows;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
 
+import io.reactivex.disposables.Disposable;
+
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
@@ -70,8 +74,20 @@ public class ConfirmActivityTest {
         ConfirmActivity activity = controller.create().get();
         activity.viewModel = mock(ConfirmViewModel.class);
 
+        Disposable notDisposed = mock(Disposable.class);
+        when(notDisposed.isDisposed()).thenReturn(false);
+        doNothing().when(notDisposed).dispose();
+        activity.disposables.add(notDisposed);
+
+        Disposable disposed = mock(Disposable.class);
+        when(disposed.isDisposed()).thenReturn(true);
+        doNothing().when(disposed).dispose();
+        activity.disposables.add(disposed);
+
         activity = controller.destroy().get();
         verify(activity.viewModel, times(1)).destroy();
+        verify(notDisposed, times(1)).dispose();
+        verify(disposed, times(0)).dispose();
     }
 
     @Test
