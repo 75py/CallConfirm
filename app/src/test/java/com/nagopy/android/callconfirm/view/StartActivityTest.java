@@ -49,7 +49,7 @@ public class StartActivityTest {
         assertThat(activity.viewModel).isNotNull();
         assertThat(activity.binding).isNotNull();
 
-        assertThat(activity.binding.appName.getText()).isEqualTo(RuntimeEnvironment.application.getString(R.string.app_name));
+        assertThat(activity.binding.appName.getText()).isEqualTo(RuntimeEnvironment.application.getText(R.string.app_name));
         //assertThat(activity.binding.version.getText()).isEqualTo(RuntimeEnvironment.application.getString(R.string.version, BuildConfig.VERSION_NAME));
     }
 

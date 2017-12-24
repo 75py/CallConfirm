@@ -65,33 +65,28 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             tools:text="Name" />
 
-        <ImageButton
+        <Button
             android:id="@+id/call"
             android:layout_height="wrap_content"
             android:layout_below="@+id/icon"
             android:layout_marginTop="@dimen/padding_medium"
-            android:background="@drawable/button_call"
-            android:contentDescription="@string/call"
+            android:drawableStart="@drawable/ic_action_call"
             android:onClick="@{viewModel.onClickCall}"
-            android:scaleType="fitCenter"
-            android:src="?android:attr/selectableItemBackground"
-            android:textColor="@android:color/white"
+            android:text="@string/call"
             app:layout_marginLeftPercent="2%"
             app:layout_marginRightPercent="2%"
             app:layout_widthPercent="46%"
             app:onLongClickListener="@{viewModel.onLongClick}" />
 
-        <ImageButton
+        <Button
             android:id="@+id/cancel"
             android:layout_height="wrap_content"
             android:layout_below="@+id/icon"
             android:layout_marginTop="@dimen/padding_medium"
             android:layout_toEndOf="@+id/call"
-            android:background="@drawable/button_cancel"
-            android:contentDescription="@string/cancel"
+            android:drawableStart="@drawable/ic_action_call_cancel"
             android:onClick="@{viewModel.onClickCancel}"
-            android:src="?android:attr/selectableItemBackground"
-            android:textColor="@android:color/white"
+            android:text="@string/cancel"
             app:layout_marginLeftPercent="2%"
             app:layout_marginRightPercent="2%"
             app:layout_widthPercent="46%"

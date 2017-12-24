@@ -59,10 +59,23 @@
 
         <receiver
             android:name=".receiver.NewOutgoingCallReceiver"
+            android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="0">
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+            <intent-filter android:priority="0">
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter android:priority="0">
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <data android:scheme="tel" />
+            </intent-filter>
+            <intent-filter android:priority="0">
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="tel" />
             </intent-filter>
         </receiver>
 

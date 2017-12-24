@@ -18,13 +18,14 @@
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.1'
         classpath 'me.tatarka:gradle-retrolambda:3.6.1'
-        classpath 'com.cookpad.android.licensetools:license-tools-plugin:0.21.1'
-        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.1'
+        classpath 'com.cookpad.android.licensetools:license-tools-plugin:1.0.0'
+        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
     }
 }
 
@@ -34,10 +35,8 @@ plugins {
 
 allprojects {
     repositories {
+        google()
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
     }
 }
 

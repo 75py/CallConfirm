@@ -63,6 +63,7 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
         unitTests.all {
             maxHeapSize = '2048m'
             jvmArgs '-XX:MaxPermSize=512m', '-XX:-UseSplitVerifier'
@@ -100,24 +101,25 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:percent:25.3.1'
-    compile 'com.android.support:customtabs:25.3.1'
-    compile 'com.jakewharton.timber:timber:4.5.1'
+    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support:support-v13:25.4.0'
+    compile 'com.android.support:percent:25.4.0'
+    compile 'com.android.support:customtabs:25.4.0'
+    compile 'com.jakewharton.timber:timber:4.6.0'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.1.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.5'
     compile 'com.trello.rxlifecycle2:rxlifecycle:2.1.0'
     compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.1.0'
-    compile 'com.google.dagger:dagger:2.11'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    compile 'com.google.dagger:dagger:2.12'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
     compile 'com.github.hotchemi:permissionsdispatcher:2.4.0'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
-    annotationProcessor 'com.android.databinding:compiler:2.3.3'
+    annotationProcessor 'com.android.databinding:compiler:3.0.1'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.7.0'
+    testCompile 'org.mockito:mockito-core:2.11.0'
     testCompile "com.google.truth:truth:0.31"
-    testCompile "org.robolectric:robolectric:3.3.1"
+    testCompile "org.robolectric:robolectric:3.5.1"
 
     // https://github.com/robolectric/robolectric/issues/1932
     testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
