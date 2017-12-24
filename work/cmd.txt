@@ -1,0 +1,4 @@
+adb shell screenrecord /sdcard/callconfirm.mp4 --size 540x960
+adb pull /sdcard/callconfirm.mp4
+ffmpeg -i callconfirm.mp4 -an -r 15 -pix_fmt rgb24 -s 540x960 -f gif callconfirm.gif
+

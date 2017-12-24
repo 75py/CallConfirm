@@ -4,6 +4,8 @@ Call Confirm [![Build Status](https://travis-ci.org/75py/CallConfirm.svg?branch=
 Stop unintended calling!
 
 
+<img src="callconfirm.gif" width="270" height="480" alt="">
+
 Download
 --------
 
