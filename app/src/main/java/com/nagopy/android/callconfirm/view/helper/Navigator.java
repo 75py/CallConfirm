@@ -60,7 +60,7 @@ public class Navigator {
     }
 
     public void call(String phoneNumber) {
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(String.format("tel:%s", Uri.encode(phoneNumber))));
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             throw new RuntimeException("Permission denied");
         }
