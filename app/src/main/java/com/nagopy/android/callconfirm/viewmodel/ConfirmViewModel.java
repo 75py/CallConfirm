@@ -66,7 +66,7 @@ public class ConfirmViewModel {
             throw new RuntimeException("phoneNumber is empty");
         }
 
-        if (!PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)) {
+        if (!PhoneNumberUtils.isWellFormedSmsAddress(phoneNumber)) {
             Timber.d("Illegal chars : %s", phoneNumber);
             throw new RuntimeException("phoneNumber contains illegal chars");
         }
